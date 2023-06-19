@@ -1,0 +1,47 @@
+version: '3.5'
+services:
+  DB:
+    image: mysql:latest
+    container_name : mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+    ports : 
+     - 3306:3306
+    networks: 
+      - my-network
+    
+
+  phymyadmin :
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: my-own-phpmyadmin
+    links:
+    - DB
+    ports : 
+     - 8081:80
+    networks: 
+      - my-network
+
+  adminUI:
+    image: amitaghosh/inout_adminui
+    container_name : adminUI
+    ports:
+      - 8888:8080
+    networks: 
+      - my-network
+    links:
+       - DB
+  
+  userUI:
+    image: amitaghosh/inout_userui
+    container_name : userUI
+    ports:
+      - 8889:8080
+    networks: 
+      - my-network
+    links:
+       - DB
+  
+networks:
+  my-network:
+    driver: bridge
+     

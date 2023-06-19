@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: azure-jupyternotebook
+    labels:
+        app: web
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: web
+    template:
+        metadata:
+            labels:
+                app: web
+        spec:
+            containers:
+                - name: azure-jupyternotebook
+                  image: amitatestregistry.azurecr.io/myjupyternotebook
+                  ports:
+                    - containerPort: 80
+    
